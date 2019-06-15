@@ -1,0 +1,48 @@
+{
+  "name": "gamerpc-lite",
+  "version": "2.0.0",
+  "author": "bookmansoft <ceo@920.cc>",
+  "contributors": [
+    "bookmansoft <ceo@920.cc>"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "vallnet",
+    "bitcoin",
+    "gamegold",
+    "gamecloud",
+    "gameserver",
+    "gamelogic",
+    "cryptcurrency",
+    "rpc",
+    "cloud"
+  ],
+  "description": "connector for gamecloud",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "build": "cross-env NODE_ENV=production webpack src/index.js --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bookmansoft/gamerpc-lite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bookmansoft/gamerpc-lite/issues"
+  },
+  "homepage": "https://github.com/bookmansoft/gamerpc-lite#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "node-fetch": "^2.6.0",
+    "webpack": "^4.34.0",
+    "webpack-cli": "^3.3.2",
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "cross-env": "^5.2.0"
+  }
+}
