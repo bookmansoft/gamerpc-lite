@@ -7,11 +7,6 @@
 	<div id='content'></div>
 	<script>
 		let gameHelper = new toolkit.gameconn();
-
-		gameHelper.events.on('hello', msg=>{
-			console.log(msg);
-		});
-		gameHelper.events.emit('hello', {id:3});
 	</script>
 </body>
 </html>

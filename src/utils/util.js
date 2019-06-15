@@ -12,61 +12,6 @@
 const util = exports;
 
 /**
- * Get current time in unix time (seconds).
- * @returns {Number}
- */
-
-util.now = function now() {
-  return Math.floor(util.ms() / 1000);
-};
-
-/**
- * Get current time in unix time (milliseconds).
- * @returns {Number}
- */
-
-util.ms = function ms() {
-  return Date.now();
-};
-
-/**
- * Create a Date ISO string from time in unix time (seconds).
- * @param {Number?} time - Seconds in unix time.
- * @returns {String}
- */
-
-util.date = function date(time) {
-  if (time == null)
-    time = util.now();
-
-  return new Date(time * 1000).toISOString().slice(0, -5) + 'Z';
-};
-
-/**
- * Get unix seconds from a Date string.
- * @param {String?} date - Date ISO String.
- * @returns {Number}
- */
-
-util.time = function time(date) {
-  if (date == null)
-    return util.now();
-
-  return new Date(date) / 1000 | 0;
-};
-
-/**
- * Get random range.
- * @param {Number} min
- * @param {Number} max
- * @returns {Number}
- */
-
-util.random = function random(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
-};
-
-/**
  * 客户端请求返回值，统一定义所有的错误码，每100个为一个大类
  */
 const ReturnCode = {
@@ -92,7 +37,6 @@ const ReturnCodeName = {
 }
 
 const CommMode = {
-    ws: "webSocket",    //Web Socket
     get: "get",         //HTTP GET
     post: "post",       //HTTP POST
 }

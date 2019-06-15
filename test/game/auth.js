@@ -47,8 +47,8 @@ describe.only('游戏云注册登录测试', () => {
             let msg = await remote.fetching({func:`${remote.userInfo.domain}.getKey`, address: remote.userInfo.address});
             assert(msg.code == 0, 'getKey error');
 
-            //当用户输入验证码时，使用事件驱动登录操作
-            remote.events.emit('authcode', msg.data);
+            //用户输入验证码
+            remote.onAuthCode(msg.data);
             await (async function(time){return new Promise(resolve =>{setTimeout(resolve, time);});})(1000);
         }
     });
@@ -105,8 +105,8 @@ describe.only('游戏云注册登录测试', () => {
             let msg = await remote.fetching({func:`${remote.userInfo.domain}.getKey`, address: remote.userInfo.address});
             assert(msg.code == 0, 'getKey error');
 
-            //当用户输入验证码时，使用事件驱动登录操作
-            remote.events.emit('authcode', msg.data);
+            //用户输入验证码
+            remote.onAuthCode(msg.data);
             await (async function(time){return new Promise(resolve =>{setTimeout(resolve, time);});})(2000);
         }
     

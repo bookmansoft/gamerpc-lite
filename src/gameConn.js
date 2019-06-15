@@ -1,5 +1,4 @@
 const {extendObj, CommStatus, clone, ReturnCodeName, ReturnCode, CommMode} = require('./utils/util');
-const EventEmitter = require('events').EventEmitter;
 const Indicator = require('./utils/Indicator');
 
 /**
@@ -15,25 +14,14 @@ class Remote {
         this.loginMode = Indicator.inst();
         this.configOri = options;                   //读取并保存初始配置，不会修改
         this.config = clone(this.configOri);        //复制一份配置信息，有可能修改
-        this.notifyHandles = {};
         this.userInfo = {};
-        //事件管理器
-        this.events = new EventEmitter();
+
         //状态管理器
         this.status = Indicator.inst(options.status);
+    }
 
-        //捕获Socket连接事件，在连接/重连时发送登录报文
-        this.events.on('comm', async (data)=>{
-            switch(data.status) {
-                case 'connect': {
-                    break;
-                }
-            }
-        });
-
-        this.events.on('authcode', async code=>{
-            await this.setSign(code).login();
-        })
+    async onAuthCode(code) {
+        return await this.setSign(code).login();
     }
 
     /**
@@ -281,73 +269,6 @@ class Remote {
     }
 
     /**
-     * 设置服务端推送报文的监控句柄，支持链式调用
-     * @param cb            回调
-     * @param etype
-     * @returns {Remote}
-     */
-    watch(cb, etype = '0') {
-        this.notifyHandles[etype] = cb;
-        return this;
-    }
-
-    /**
-     * 判断返回值是否成功
-     * @param msg       网络报文
-     * @param out       强制打印日志
-     * @returns {*}
-     */
-    isSuccess(msg, out=false) {
-        if(!msg) {
-            return false;
-        }
-
-        msg.msg = ReturnCodeName[msg.code];
-
-        if((msg.code != ReturnCode.Success) || out){
-            this.log(msg);
-        }
-
-        return msg.code == ReturnCode.Success;
-    }
-
-    /**
-     * 直接打印各种对象
-     * @param val
-     */
-    log(val){
-        if(!val){
-            console.log('undefined');
-            return;
-        }
-
-        if(!!val.code){
-            val.msg = ReturnCodeName[val.code];
-        }
-
-        switch(typeof val){
-            case 'number':
-            case 'string':
-            case 'boolean':
-                console.log(val);
-                break;
-            case 'function':
-                console.log(val());
-                break;
-            case 'undefined':
-                console.log('err: undefined');
-                break;
-            default:
-                console.log(JSON.stringify(val));
-                break;
-        }
-    }
-
-    get newone(){
-        return new Remote(this.configOri).setmode(this.rpcMode);
-    }
-
-    /**
      * 获取新的远程对象
       * @returns {Remote}
      */
@@ -411,7 +332,6 @@ class Remote {
         this.userInfo = {};
         this.status.init();
         this.loginMode.init();
-        this.notifyHandles = {};
         
         return this;
     }
